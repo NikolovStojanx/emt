@@ -49,6 +49,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employmentDate
         ));
     }
+    @Override
+    public Employee createTemp(String name, String email, EmployeeType type) {
+        return this.employeeRepository.save(new Employee(name, email, type));
+    }
 
     @Override
     public Employee update(Long id, String name, String email, String password, EmployeeType type, List<Long> skillId, LocalDate employmentDate) {
@@ -85,4 +89,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             return employeeRepository.findByEmploymentDateBefore(employmentBefore);
         }
     }
+
+
 }

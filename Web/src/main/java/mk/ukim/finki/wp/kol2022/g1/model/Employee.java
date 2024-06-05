@@ -19,6 +19,11 @@ public class Employee {
         this.skills = skills;
         this.employmentDate = employmentDate;
     }
+    public Employee(String name, String email, EmployeeType type) {
+        this.name = name;
+        this.email = email;
+        this.type = type;
+    }
 
     @Id
     @GeneratedValue
@@ -37,6 +42,8 @@ public class Employee {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Skill> skills;
+
+
 
     public Long getId() {
         return id;

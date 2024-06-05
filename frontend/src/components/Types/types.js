@@ -8,14 +8,14 @@ const types = (props) => {
                     <table className={"table table-striped"}>
                         <thead>
                         <tr>
-                            <th scope={"col"}>Name</th>
+                            <th scope={"col"}>Type</th>
                         </tr>
                         </thead>
                         <tbody>
                         {props.types.map((term) => {
                             return (
                                 <tr>
-                                    <td>{term.name}</td>
+                                    <td>{term}</td>
                                 </tr>
                             )
                         })}

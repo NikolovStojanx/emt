@@ -59,4 +59,7 @@ public interface EmployeeService {
      * @return The entities that meet the filtering criteria
      */
     List<Employee> filter(Long skillId, Integer yearsOfService);
+
+    Employee createTemp(String name, String email, EmployeeType type);
+
 }

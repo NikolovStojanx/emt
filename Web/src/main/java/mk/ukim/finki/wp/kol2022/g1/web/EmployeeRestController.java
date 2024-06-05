@@ -65,30 +65,33 @@ public class EmployeeRestController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        Employee createdEmployee = service.create(employee.getName(),
-                employee.getEmail(),
-                employee.getPassword(),
-                employee.getType(),
-                employee.getSkills().stream().map(skill -> skill.getId()).collect(Collectors.toList()),
-                employee.getEmploymentDate());
+//        Employee createdEmployee = service.create(employee.getName(),
+//                employee.getEmail(),
+//                employee.getPassword(),
+//                employee.getType(),
+//                employee.getSkills().stream().map(skill -> skill.getId()).collect(Collectors.toList()),
+//                employee.getEmploymentDate());
+        Employee createdEmployee = service.createTemp(employee.getName(), employee.getEmail(), employee.getType());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdEmployee);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
         Employee employee = service.findById(id);
+        if (employeeDetails.getSkills() == null)
+            employeeDetails.setSkills(skillService.listAll());
         if (employee != null) {
 
-            Employee updatedEmployee = service.update(employeeDetails.getId(),
+            Employee updatedEmployee = service.update(id,
                     employeeDetails.getName(),
                     employeeDetails.getEmail(),
-                    employeeDetails.getPassword(),
+                    employee.getPassword(),
                     employeeDetails.getType(),
                     employeeDetails.getSkills().stream().map(skill -> skill.getId()).collect(Collectors.toList()),
-                    employeeDetails.getEmploymentDate());
+                    employee.getEmploymentDate());
 
             return ResponseEntity.ok(updatedEmployee);
         } else {
@@ -96,7 +99,7 @@ public class EmployeeRestController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         Employee employee = service.findById(id);
         if (employee != null) {
